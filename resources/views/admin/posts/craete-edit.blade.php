@@ -19,50 +19,55 @@
             @endif
             <div class="panel-header">
                 <h3 class="text-center" style="padding-top: 20px">
-                        {{-- {{ isset($user) ? 'Edit User' : 'Create User' }} --}}
+                        {{ isset($post) ? 'Edit Post' : 'Create Post' }}
                 </h3>
                 <hr>
             </div>
             <div class="panel-body">
                 <div class="d-flex justify-content-end mb-5">
-                    <a href="{{ route('user.index') }}" class="btn btn-outline-secondary"><i class="fa fa-arrow-left"></i> Back</a>
+                    <a href="{{ route('post.index') }}" class="btn btn-outline-secondary"><i class="fa fa-arrow-left"></i> Back</a>
                 </div>
-                {{-- <form action="{{ isset($user) ? route('user.update', ['id' => $user->id]) : route('user.store')}} " method="POST" enctype="multipart/form-data"> --}}
-                   {{-- @if (isset($user))
+                <form action="{{ isset($post) ? route('post.update', ['id' => $post->id]) : route('post.store')}} " method="POST" enctype="multipart/form-data">
+                   @if (isset($post))
                         @method('PUT')
-                   @endif --}}
+                   @endif
                     <div class="row">
                         <div class="col-md-7">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                {{-- <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="{{ isset($user) ? $user->name : ''  }}"> --}}
+                                <label for="title">Title</label>
+                                <input type="text" id="title" name="title" placeholder="Title" class="form-control" value="{{ isset($post) ? $post->title : ''  }}">
                             </div>
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                {{-- <input type="text" id="email" name="email" placeholder="Email" class="form-control" value="{{ isset($user) ? $user->email : ''  }}"> --}}
+                                <label for="detail">Detail</label>
+                                <input type="text" id="detail" name="detail" placeholder="Detail" class="form-control" value="{{ isset($post) ? $post->detail : ''  }}">
                             </div>
                             <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" id="password" name="password" placeholder="Password" class="form-control">
+                                <label for="description">Description</label>
+                                {{-- <input type="password" id="password" name="password" placeholder="Password" class="form-control"> --}}
+                                <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ isset($post) ? $post->description : ''  }}</textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="role">Role</label>
 
-                                <select name="roles[]"  id="role" class="form-control ">
-                                    {{-- @foreach ($roles as $role)
-                                        <option value="{{$role->id}}"
-                                            @if (isset($user))
-                                                @if($user->roles->contains($role->id))
-                                                    selected='selected'
-                                                @endif
-                                          @endif
-                                        >{{ $role->name }}</option> --}}
-                                    {{-- @endforeach --}}
-                                </select>
-                            </div>
                         </div>
                         <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="iso_code">Iso Code</label>
+
+                                <select name="iso_code"  id="iso_code" class="form-control ">
+                                        <option value="uz">UZ</option>
+                                        <option value="ru">RU</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="is_active">Is Active</label>
+
+                                <select name="is_active"  id="is_active" class="form-control ">
+                                        <option value="0">Yes</option>
+                                        <option value="1">No</option>
+                                </select>
+                            </div>
+
                             <div class="form-group">
                                 <label for="image">Image</label>
                                 <input type="file" id="image" name="image" placeholder="Image" class="form-control">

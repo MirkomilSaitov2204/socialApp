@@ -7,7 +7,6 @@ use App\Support\Traits\HasTranslation;
 
 class Post extends Model
 {
-    use HasTranslation;
     /**
      * The table associated with the model.
      *
@@ -40,4 +39,15 @@ class Post extends Model
     protected $translatable = [
         'title', 'detail'
     ];
+
+    /**
+     * Get all posts
+     *
+     * @return mix
+     */
+    public function getAllPosts()
+    {
+        return $this->all();
+    }
+
 }

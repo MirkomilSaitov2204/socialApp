@@ -16,9 +16,9 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->json('title');
-            $table->json('detail');
-            $table->json('description');
+            $table->string('title');
+            $table->string('detail');
+            $table->text('description');
             $table->string('image')->nullable();
 
             $table->string('iso_code', 2);
