@@ -32,6 +32,7 @@ class IndexController extends Controller
 
     public function single($title)
     {
+            
         $post = Post::where('title', $title)->first();
 
         return view('front.single', compact('post'));

@@ -13,7 +13,7 @@
 
 Route::get('/', 'IndexController@index')->name('index');
 Route::get('/posts/single/{title}', 'IndexController@single')->name('post.single');
-Route::post('/comment/{id}', 'IndexController@comment')->name('index.comment');
+Route::post('comment/{post_id}', 'CommentController@store')->name('comment.store');
 
 Auth::routes();
 
@@ -42,6 +42,17 @@ Route::prefix('manage')->middleware('role:administrator|client|editor')->group(f
     Route::put('/post/update/{id}', 'PostController@update')->name('post.update');
     Route::delete('/post/destroy/{id}', 'PostController@destroy')->name('post.destroy');
 
+
+
 });
 
+
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/posts', 'HomeController@index')->name('posts.index');
+Route::get('/posts/create', 'HomeController@create')->name('posts.create');
+Route::post('/posts/store', 'HomeController@store')->name('posts.store');
+Route::get('/posts/show/{id}', 'HomeController@show')->name('posts.show');
+Route::get('/posts/edit/{id}', 'HomeController@edit')->name('posts.edit');
+Route::put('/posts/update/{id}', 'HomeController@update')->name('posts.update');
+Route::delete('/posts/destroy/{id}', 'HomeController@destroy')->name('posts.destroy');
