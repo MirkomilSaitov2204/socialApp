@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -51,6 +52,7 @@ class PostController extends Controller
 
 
         $post = new Post();
+        $post->user_id = Auth::user()->id;
         $post->title = $request->title;
         $post->detail = $request->detail;
         $post->description = $request->description;
@@ -76,7 +78,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::where('id', $id)->first();
-        return view('admin.post.show')->with('post', $post);
+        return view('admin.posts.show')->with('post', $post);
     }
 
     /**
@@ -87,21 +89,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::where('name', '==', 'administrator')->get();
 
-        if($role){
-            $roles = Role::all();
-            $user = User::where('id', $id)->with('roles')->first();
+        $post = Post::where('id', $id)->first();
 
-            return view('admin.users.create-edit')->with('user', $user)
-                                                  ->with('roles', $roles);
-        }
-
-        $roles = Role::where('name', '!=' ,'administrator')->get();
-        $user = User::where('id', $id)->with('roles')->first();
-
-        return view('admin.users.create-edit')->with('user', $user)
-                                              ->with('roles', $roles);
+        return view('admin.posts.craete-edit')->with('post', $post);
     }
 
     /**
@@ -114,33 +105,35 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name'=>'required',
-            'email'=>'required',
+            'title'=>'required',
+            'image'=>'image',
         ]);
-        $user = User::findOrFail($id);
+        $post = Post::findOrFail($id);
 
         if($request->hasFile('image')){
             $image = $request->file('image')->getClientOriginalName();
             $fileName = pathinfo($image, PATHINFO_FILENAME);
             $new_name = $request->file('image')->getClientOriginalExtension();
             $fileNameToStore = $fileName.'_'.time().'.'.$new_name;
-            $path = $request->file('image')->storeAs('public/userImage', $fileNameToStore);
+            $path = $request->file('image')->storeAs('public/postImage', $fileNameToStore);
 
 
         }
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        
+        $post->user_id = Auth::user()->id;
+        $post->title = $request->title;
+        $post->detail = $request->detail;
+        $post->description = $request->description;
+        $post->iso_code = $request->iso_code;
+        $post->is_active = $request->is_active;
         if($request->hasFile('image')){
-            $user->image = $fileNameToStore;
+            $post->image = $fileNameToStore;
         }
 
-        $user->save();
-        // $user->roles()->attach($request->roles);
-        $user->syncRoles($request->input('roles'));
+        $post->save();
 
-        Session::flash('success','User Successfully Updated');
-        return redirect()->route('user.index');
+        Session::flash('success','Post Successfully Updated');
+        return redirect()->route('post.index');
 
     }
 
@@ -152,11 +145,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
-        $user->delete();
+        $post = Post::find($id);
+        $post->delete();
 
-        Session::flash('success','User Successfully Deleted');
-        return redirect()->route('user.index');
+        Session::flash('success','Post Successfully Deleted');
+        return redirect()->route('post.index');
 
     }
 

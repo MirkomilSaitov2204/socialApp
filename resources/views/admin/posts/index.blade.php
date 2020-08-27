@@ -13,18 +13,19 @@
             </div>
             <div class="panel-body">
                     <div class="d-flex justify-content-end mb-5">
-                        @can('create-users')
+                        {{-- @can('create-users') --}}
                             <a href="{{ route('post.create') }}" class="btn btn-outline-secondary"><i class="fa fa-user-plus"></i> Create Posts</a>
-                        @endcan
+                        {{-- @endcan --}}
                     </div>
                     <div class="col-md-12">
                         <table id="table" class="display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>№</th>
+                                        <th>Author name</th>
                                         <th>Image</th>
                                         <th>title</th>
-                                        <th>Language</th>
+                                        {{-- <th>Language</th> --}}
                                         <th>is Active</th>
                                         <th>Action</th>
                                     </tr>
@@ -34,10 +35,13 @@
                                         <tr>
                                             <td>{{ ++$k }}</td>
                                             <td>
+                                                {{ $post->user->name }}
+                                            </td>
+                                            <td>
                                                 <img src="/storage/postImage/{{ $post->image }}" alt="" width="80px" height="80px">
                                             </td>
                                             <td>{{ $post->title }}</td>
-                                            <td>{{ $post->iso_code }}</td>
+                                            {{-- <td>{{ $post->iso_code }}</td> --}}
                                             <td>
                                                 @if ($post->is_active == 1)
                                                     No
@@ -53,7 +57,7 @@
                                                     <a href="{{ route('post.edit', ['id' => $post->id]) }}" class="btn btn-success"><i class="fa fa-pencil-square-o"></i></a>
                                                 @endcan
                                                 @can('delete-users')
-                                                    <form action="{{ route('user.destroy', ['id'=>$post->id]) }}" method="POST">
+                                                    <form action="{{ route('post.destroy', ['id'=>$post->id]) }}" method="POST">
                                                             @method('DELETE')
                                                             @csrf
                                                             <button  type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
@@ -66,9 +70,10 @@
                                 <tfoot>
                                     <tr>
                                         <th>№</th>
+                                        <th>Author name</th>
                                         <th>Image</th>
                                         <th>title</th>
-                                        <th>Language</th>
+                                        {{-- <th>Language</th> --}}
                                         <th>is Active</th>
                                         <th>Action</th>
                                     </tr>

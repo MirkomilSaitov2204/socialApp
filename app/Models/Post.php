@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Support\Traits\HasTranslation;
+use App\User;
 
 class Post extends Model
 {
@@ -21,6 +22,7 @@ class Post extends Model
         'image',
         'iso_code',
         'is_active',
+        'user_id',
     ];
 
     protected $casts = [
@@ -40,6 +42,8 @@ class Post extends Model
         'title', 'detail'
     ];
 
+
+
     /**
      * Get all posts
      *
@@ -50,4 +54,25 @@ class Post extends Model
         return $this->all();
     }
 
+
+    /**
+     * Get all posts
+     *
+     * @return mix
+     */
+    public function getAllPostsWithStatus()
+    {
+        return $this->where('is_active', 'yes')->get();
+    }
+
+
+
+    /**
+     * User relationships
+     *
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

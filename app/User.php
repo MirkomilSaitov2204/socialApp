@@ -2,6 +2,7 @@
 
 namespace App;
 use App\Admin\Role;
+use App\Models\Post;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -60,6 +61,11 @@ class User extends Authenticatable
             }
        }
        return false;
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 
 

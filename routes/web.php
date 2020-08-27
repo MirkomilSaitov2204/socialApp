@@ -12,9 +12,8 @@
 */
 
 Route::get('/', 'IndexController@index')->name('index');
-// Route::get('/admins', function () {
-//     return view('admin.dashboard');
-// });
+Route::get('/posts/single/{title}', 'IndexController@single')->name('post.single');
+Route::post('/comment/{id}', 'IndexController@comment')->name('index.comment');
 
 Auth::routes();
 
@@ -29,7 +28,7 @@ Route::prefix('manage')->middleware('role:administrator|client|editor')->group(f
     Route::get('/user/edit/{id}', 'UserController@edit')->name('user.edit')->middleware('can:update-users,id');
     Route::put('/user/update/{id}', 'UserController@update')->name('user.update')->middleware('can:update-users,id');
     Route::get('/user/show/{id}', 'UserController@show')->name('user.show')->middleware('can:read-users,id');
-    Route::get('/user/destroy/{id}', 'UserController@destroy')->name('user.destroy')->middleware('can:delete-users,id');
+    Route::delete('/user/destroy/{id}', 'UserController@destroy')->name('user.destroy')->middleware('can:delete-users,id');
 
     Route::resource('/role', 'Admin\RoleController', ['except'=>'destroy']);
     Route::resource('/permission', 'Admin\PermissionController', ['except'=>'destroy']);
@@ -40,6 +39,8 @@ Route::prefix('manage')->middleware('role:administrator|client|editor')->group(f
     Route::post('/post/store', 'PostController@store')->name('post.store');
     Route::get('/post/show/{id}', 'PostController@show')->name('post.show');
     Route::get('/post/edit/{id}', 'PostController@edit')->name('post.edit');
+    Route::put('/post/update/{id}', 'PostController@update')->name('post.update');
+    Route::delete('/post/destroy/{id}', 'PostController@destroy')->name('post.destroy');
 
 });
 

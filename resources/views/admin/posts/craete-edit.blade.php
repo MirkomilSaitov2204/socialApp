@@ -50,15 +50,15 @@
 
                         </div>
                         <div class="col-md-5">
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="iso_code">Iso Code</label>
 
                                 <select name="iso_code"  id="iso_code" class="form-control ">
                                         <option value="uz">UZ</option>
                                         <option value="ru">RU</option>
                                 </select>
-                            </div>
-
+                            </div> --}}
+                            <input type="hidden" name="iso_code" id="" value="uz">
                             <div class="form-group">
                                 <label for="is_active">Is Active</label>
 

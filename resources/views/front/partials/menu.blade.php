@@ -9,8 +9,10 @@
 
         @php
             $user = Auth::user();
-            foreach($user->roles as $role){
-                $rn = $role->name;
+            if($user){
+                foreach($user->roles as $role){
+                    $rn = $role->name;
+                }
             }
 
         @endphp
